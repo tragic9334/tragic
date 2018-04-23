@@ -20,8 +20,8 @@ client.on('message', message => {
     if (message.content === '!help') {
     	message.channel.send({embed:{
             title:"Need help?",
-            description:"You ain't gettin none.",
-            color: 0xFF3939
+            description:"Send a PM to <@317619987311230976>",
+            color: 0x70f1f4
         }})
   	}
 });
