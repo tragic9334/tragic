@@ -17,6 +17,16 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
+    if (message.content === '!help') {
+    	message.channel.send({embed:{
+            title:"Need help?",
+            description:"You ain't gettin none.",
+            color: 0xFF3939
+        }})
+  	}
+});
+
+client.on('message', message => {
     if (message.content === 'Tragic') {
     	message.channel.send('xoxo');
   	}
