@@ -7,18 +7,18 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    if (message.content === 'wm5') {
+    if (message.content === '!info') {
     	message.channel.send({embed:{
-            title:"ATTENTION",
-            description:"**If you've just joined the server, you will have to wait** __**10 minutes**__ **before you can react.**",
+            title:"INFORMATION",
+            description:"Server owned by <@247133649206640640>, bot run by <@317619987311230976>",
             color: 0xFF3939
         }})
   	}
 });
 
 client.on('message', message => {
-    if (message.content === '%devannouncement') {
-    	message.channel.send('<@&428010525410983937> The **iOS 11.4 Developer Beta 2** is now available. Check out https://developer.apple.com/support/beta-software/install-ios-beta/ for more info on how to get started.');
+    if (message.content === 'Tragic') {
+    	message.channel.send('xoxo');
   	}
 });
 
