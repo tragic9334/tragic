@@ -9,8 +9,8 @@ client.on('ready', () => {
 client.on('message', message => {
     if (message.content === '!info') {
     	message.channel.send({embed:{
-            title:"INFORMATION",
-            description:"Server owned by <@247133649206640640>, bot run by <@317619987311230976>",
+            title:"Info",
+            description:"Researched and developed with funding from the US Department of Technology by <@317619987311230976>",
             color: 0xFF3939
         }})
   	}
@@ -39,8 +39,8 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-    if (message.content === 'xoxo') {
-    	message.channel.send('Cute xo');
+    if (message.content === 'no u') {
+    	message.channel.send('no u');
   	}
 });
 
