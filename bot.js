@@ -39,8 +39,8 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-    if (message.content === 'no u') {
-    	message.channel.send('no u');
+    if (message.contain === 'test') {
+    	message.channel.send('test');
   	}
 });
 
