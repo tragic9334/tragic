@@ -38,12 +38,6 @@ client.on('message', message => {
   	}
 });
 
-client.on('message', message => {
-    if (message.contain === 'test') {
-    	message.channel.send('test');
-  	}
-});
-
 client.on("message", async message => {
   // This event will run on every single message received, from any channel or DM.
   
@@ -138,6 +132,60 @@ client.on("message", async message => {
       .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
     message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
   }
+    
+   
+  if(command === "mute") {
+      if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("Insufficient permissions.");
+   
+      let toMute = message.mentions.members.first() || message.guild.members.get(args[0]);
+      if(!toMute) return message.channel.sendMessage("Please specify a user or ID");
+   
+      let role = message.guild.roles.find(r => r.name === "Muted");
+      if(!role) {
+          try{
+             role = await message.guild.createRole({
+             name: "Muted",
+             color: "#000000",
+             permissions: []
+         });
+    
+         message.guild.channels.forEach(async (channel, id) => {
+             await channel.overwritePermissions(role, {
+                 SEND_MESSAGES: false,
+                 ADD_REACTIONS: false
+             });
+            });
+        } catch(e) {
+            console.log(e.stack);
+        } 
+   }
+   
+   if(toMute.roles.has(role.id)) return message.channel.sendMessage("This user is already muted.");
+   
+   await toMute.addRole(role);
+   message.channel.sendMessage("Done.")
+    
+   return;
+   
+  }
+ 
+    if(command === "unmute") {
+       if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("Insufficient permissions.");
+   
+       let toMute = message.mentions.members.first() || message.guild.members.get(args[0]);
+       if(!toMute) return message.channel.sendMessage("Please specify a user or ID");
+   
+       let role = message.guild.roles.find(r => r.name === "Muted");
+   
+       if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("This user is not muted.");
+   
+       await toMute.removeRole(role);
+       message.channel.sendMessage("Done.")
+    
+       return;
+   
+  }
+   
   
   if(command === "purge") {
     // This command removes all messages from all users in the channel, up to 100.
