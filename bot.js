@@ -75,21 +75,11 @@ client.on("message", async message => {
     message.channel.send(sayMessage);
   }
   
-  //if(command === "say") {
-    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
-    // To get the "message" itself we join the `args` back into a string with spaces: 
-   // const sayMessage = args.join(" ");
-    // Then we delete the command message (sneaky, right?). The catch just ignores the error with a cute smiley thing.
-   // message.delete().catch(O_o=>{}); 
-    // And we get the bot to say the thing: 
-   // message.channel.send(sayMessage);
- // }
-  
   if(command === "kick") {
     // This command must be limited to mods and admins. In this example we just hardcode the role names.
     // Please read on Array.some() to understand this bit: 
     // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/some?
-    if(!message.member.roles.some(r=>["Elevated Thots", "Leader"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)) )
       return message.channel.send("Permission denied.");
     
     // Let's first check if we have a member and if we can kick them!
@@ -116,13 +106,13 @@ client.on("message", async message => {
     // Most of this command is identical to kick, except that here we'll only let admins do it.
     // In the real world mods could ban too, but this is just an example, right? ;)
     if(!message.member.roles.some(r=>["Administrator"].includes(r.name)) )
-      return message.reply("Permission denied.");
+      return message.channel.send("Permission denied.");
     
     let member = message.mentions.members.first();
     if(!member)
       return message.reply("Please mention a user.");
     if(!member.bannable) 
-      return message.reply("Unable to ban user. Check role hierarchy.");
+      return message.channel.send("Unable to ban user. Check role hierarchy.");
 
     let reason = args.slice(1).join(' ');
     if(!reason)
@@ -130,10 +120,9 @@ client.on("message", async message => {
     
     await member.ban(reason)
       .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
+    message.channel.send(`:ok_hand: ${member.user.tag} has been banned by ${message.author.tag} (${reason})`);
   }
-    
-   
+ 
   if(command === "mute") {
       if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("Insufficient permissions.");
    
@@ -186,7 +175,6 @@ client.on("message", async message => {
    
   }
    
-  
   if(command === "purge") {
     // This command removes all messages from all users in the channel, up to 100.
     
